@@ -1,0 +1,15 @@
+# Arquivos de ambiente (SEGURANÇA!)
+.env
+
+# Pastas de ambiente virtual (Python)
+venv/
+env/
+__pycache__/
+
+# Dependências (não subir para o Git, pois são instaladas no servidor)
+node_modules/
+dist/
+build/
+
+# Sistema
+.DS_Store
