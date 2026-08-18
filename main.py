@@ -16,17 +16,13 @@ load_dotenv()
 # Coloque a sua chave gerada no site do Groq aqui
 GROQ_API_KEY = os.getenv("GROQ_API_KEY") 
 
-print(
-    "GROQ KEY:",
-    GROQ_API_KEY[:10] + "..."
-)
 
 if not GROQ_API_KEY:
   raise Exception("GROQ_API_KEY não encontrada")
 
 local_llm = ChatGroq(
-    temperature=0.3, 
-    model_name="llama-3.3-70b-versatile", # <--- Garanta que está exatamente assim
+    temperature=0.3,
+    model_name="openai/gpt-oss-20b",
     api_key=GROQ_API_KEY
 )
 
@@ -35,39 +31,6 @@ local_llm = ChatGroq(
 # =====================================================
 
 app = FastAPI()
-
-from groq import Groq
-
-@app.get("/test-groq")
-async def test_groq():
-
-    try:
-
-        client = Groq(
-            api_key=GROQ_API_KEY
-        )
-
-        response = client.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": "Responda apenas: funcionando"
-                }
-            ],
-            model="llama-3.1-8b-instant"
-        )
-
-        return {
-            "status": "ok",
-            "resposta": response.choices[0].message.content
-        }
-
-    except Exception as e:
-
-        return {
-            "status": "erro",
-            "erro": str(e)
-        }
 
 # =====================================================
 # MODELO DA REQUISIÇÃO
