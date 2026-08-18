@@ -25,8 +25,8 @@ if not GROQ_API_KEY:
   raise Exception("GROQ_API_KEY não encontrada")
 
 local_llm = ChatGroq(
-    temperature=0.3, # Um pouco de criatividade, mas mantendo a precisão financeira
-    model_name="llama-3.3-70b-versatile", # Modelo super rápido e inteligente disponível no Groq
+    temperature=0.3, 
+    model_name="llama-3.3-70b-versatile", # <--- Garanta que está exatamente assim
     api_key=GROQ_API_KEY
 )
 
@@ -35,6 +35,39 @@ local_llm = ChatGroq(
 # =====================================================
 
 app = FastAPI()
+
+from groq import Groq
+
+@app.get("/test-groq")
+async def test_groq():
+
+    try:
+
+        client = Groq(
+            api_key=GROQ_API_KEY
+        )
+
+        response = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": "Responda apenas: funcionando"
+                }
+            ],
+            model="llama-3.1-8b-instant"
+        )
+
+        return {
+            "status": "ok",
+            "resposta": response.choices[0].message.content
+        }
+
+    except Exception as e:
+
+        return {
+            "status": "erro",
+            "erro": str(e)
+        }
 
 # =====================================================
 # MODELO DA REQUISIÇÃO
