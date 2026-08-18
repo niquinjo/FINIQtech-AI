@@ -26,7 +26,7 @@ if not GROQ_API_KEY:
 
 local_llm = ChatGroq(
     temperature=0.3, # Um pouco de criatividade, mas mantendo a precisão financeira
-    model_name="llama-3.1-8b-instant", # Modelo super rápido e inteligente disponível no Groq
+    model_name="llama-3.3-70b-versatile", # Modelo super rápido e inteligente disponível no Groq
     api_key=GROQ_API_KEY
 )
 
