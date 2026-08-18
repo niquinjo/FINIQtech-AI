@@ -16,6 +16,11 @@ load_dotenv()
 # Coloque a sua chave gerada no site do Groq aqui
 GROQ_API_KEY = os.getenv("GROQ_API_KEY") 
 
+print(
+    "GROQ KEY:",
+    GROQ_API_KEY[:10] + "..."
+)
+
 if not GROQ_API_KEY:
   raise Exception("GROQ_API_KEY não encontrada")
 
