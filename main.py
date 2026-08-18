@@ -22,7 +22,7 @@ if not GROQ_API_KEY:
 
 local_llm = ChatGroq(
     temperature=0.3,
-    model_name="openai/gpt-oss-20b",
+    model_name="openai/gpt-oss-120b",
     api_key=GROQ_API_KEY
 )
 
@@ -81,8 +81,14 @@ async def analysis(data: RequestData):
         REGRAS DE COMPORTAMENTO:
         1. REDIRECIONAMENTO EDUCADO: Se o usuário pedir o saldo ou transações de um MÊS ESPECÍFICO do passado (ex: "março", "ano passado", "mês passado"), explique educadamente que você foca no panorama atual e oriente-o a usar o aplicativo. 
            - Exemplo de resposta: "Como eu analiso o seu cenário geral e recente, não consigo puxar dados de meses anteriores por aqui. Mas você pode conferir isso facilmente voltando os meses lá na sua aba de 'Transações'! Sobre o seu cenário de agora, tem alguma outra dúvida?"
-        
-        2. FOCO EM CONSELHOS: Se o usuário pedir uma análise ("Como estão minhas finanças?"), foque em dizer se o saldo está positivo/saudável, onde ele pode melhorar e dê dicas práticas com base nas categorias que você vê nas últimas movimentações.
+        2. FOCO EM CONSELHOS:
+            Se o usuário pedir uma análise geral ("Como estão minhas finanças?"):
+
+            - Compare entradas e saídas.
+            - Diga se o saldo atual está positivo ou negativo.
+            - Destaque até 3 pontos principais.
+            - Forneça recomendações práticas.
+            - Seja breve e útil.
         
         3. NATURALIDADE: NUNCA narre suas ações (ex: "Vou analisar", "Sua pergunta foi"). Apenas converse naturalmente. Responda perguntas curtas com respostas curtas.
         
@@ -95,6 +101,12 @@ async def analysis(data: RequestData):
         7. Evitar redundância: Evite repetir a pergunta do usuário ou informações já fornecidas.
 
         8. Evite julgar valores como altos ou baixos sem uma referência. Compare sempre entradas e saídas.
+
+        9. Evite criar exemplos específicos que não estejam presentes nas movimentações do usuário.
+
+        10. Considere apenas as movimentações recebidas no contexto.
+        Não assuma que elas representam todo o histórico financeiro do usuário.
+        Quando necessário, deixe claro que sua análise foi baseada nas movimentações recentes disponíveis.
         
         """
         print("INICIANDO IA (VIA GROQ)...")
